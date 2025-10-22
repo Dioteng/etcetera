@@ -41,11 +41,47 @@ body{
 .details ul{padding-left:1.25rem;margin:0;color:var(--muted)}
 
 .actions{display:flex;gap:12px;justify-content:center;margin-top:1rem}
+.options {margin:2.5rem 0;}
+.options p{display: flex;justify-content: center; margin-top: -12px;}
 .btn{padding:0.65rem 1rem;border-radius:10px;border:0;font-weight:600;cursor:pointer}
 .btn-primary{background:linear-gradient(180deg,var(--pink-400),var(--pink-600));color:white}
 .btn-ghost{background:transparent;border:2px solid rgba(232,74,154,0.12);color:var(--pink-600)}
 
-.footer{text-align:center;margin-top:1.5rem;color:var(--muted)}
+/* smooth transform transitions for the dodge animation */
+.btn-ghost{transition:transform 360ms cubic-bezier(.2,.9,.2,1)}
+
+/* Prevent overlap on very small screens: stack buttons vertically */
+/* use a slightly smaller threshold so small phones still see horizontal layout */
+@media (max-width:360px){
+  .actions{flex-direction:column;align-items:stretch}
+  .btn{width:100%;display:block}
+  .btn + .btn{margin-top:8px}
+}
+
+/* gallery */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:0.5rem}
+.gallery-item{width:100%;height:120px;object-fit:cover;border-radius:8px;cursor:pointer;display:block}
+.gallery-placeholder{color:var(--muted);padding:1rem;text-align:center;font-size:0.95rem}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:60;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.lightbox[aria-hidden="false"]{opacity:1;pointer-events:auto}
+.lightbox-panel{max-width:92vw;max-height:92vh;position:relative}
+.lightbox-panel img{max-width:100%;max-height:86vh;border-radius:10px;display:block}
+.lightbox-close{position:absolute;right:-8px;top:-24px;background:#fff;border-radius:999px;border:0;padding:6px 10px;cursor:pointer}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.55;
+    background: transparent;
+    padding: 0.5rem 0;
+    z-index: 10;
+}
 .heart{color:var(--pink-600);font-weight:700}
 
 /* Modal */
