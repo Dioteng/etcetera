@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Will you go on a date with me?</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <img src="assets/heart.svg" alt="heart" class="logo" />
+        <h1 class="title">A little invitation</h1>
+        <p class="subtitle">Would you like to go on a date with me?</p>
+      </header>
+
+      <section class="details card">
+        <h2>Details</h2>
+        <ul>
+          <li><strong>When:</strong> [your date]</li>
+          <li><strong>Where:</strong> [your place]</li>
+          <li><strong>Time:</strong> [your time]</li>
+        </ul>
+      </section>
+
+      <section class="actions">
+        <button id="yesBtn" class="btn btn-primary">Yes, I'd love to</button>
+        <button id="noBtn" class="btn btn-ghost">Not this time</button>
+      </section>
+
+      <footer class="footer">Made with <span class="heart">❤</span></footer>
+    </main>
+
+    <!-- RSVP Modal -->
+    <div id="rsvpModal" class="modal" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+        <h3 id="modalTitle">Yay! Quick RSVP</h3>
+        <form id="rsvpForm">
+          <label>
+            Your name
+            <input type="text" id="name" placeholder="Your name" required />
+          </label>
+          <label>
+            A short message
+            <textarea id="message" rows="3" placeholder="Something sweet... (optional)"></textarea>
+          </label>
+          <div class="modal-actions">
+            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/script.js" defer></script>
+  </body>
+</html>
