@@ -200,25 +200,110 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // initialize galleries on DOM ready
   loadGalleries();
 
+  // Optional Firebase initialization (if user provided assets/firebase-config.js which sets window.FIREBASE_CONFIG)
+  // The config script is loaded asynchronously in index.html. Wait briefly for both the config and the SDK
+  // to be available before attempting initialization. If not present after timeout, continue with localStorage fallback.
+  let firestore = null;
+  async function initFirebaseWithTimeout({timeout = 4000, interval = 150} = {}){
+    const start = Date.now();
+    function hasSdk(){ return typeof window.firebase !== 'undefined' && typeof window.firebase.initializeApp === 'function'; }
+    while (Date.now() - start < timeout){
+      if (window.FIREBASE_CONFIG && hasSdk()) break;
+      await new Promise(r => setTimeout(r, interval));
+    }
+
+    if (!window.FIREBASE_CONFIG){
+      console.info('No Firebase config found (assets/firebase-config.js). Using localStorage for RSVPs.');
+      return null;
+    }
+    if (!hasSdk()){
+      console.warn('Firebase SDK not available even though config was found. Ensure SDK script tags are present. Using localStorage.');
+      return null;
+    }
+
+    try{
+      const app = firebase.initializeApp(window.FIREBASE_CONFIG);
+      const db = firebase.firestore();
+      console.info('Firebase initialized');
+      return db;
+    }catch(err){
+      console.warn('Firebase init failed, falling back to localStorage', err);
+      return null;
+    }
+  }
+
+  // start initialization but don't block page load
+  initFirebaseWithTimeout().then(db => { firestore = db; });
+
   // Submit RSVP (local-only): store to localStorage and show a tiny thank you
   if (rsvpForm){
-    rsvpForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
-    rsvps.push({name, message, ts: Date.now()});
-    localStorage.setItem('rsvps', JSON.stringify(rsvps));
-    closeModal();
-    showThanks(name);
+    rsvpForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const payload = {name, message, ts: Date.now()};
+
+      // If firestore available, attempt to write to collection 'rsvps'
+      if (firestore){
+        try{
+          await firestore.collection('rsvps').add(payload);
+          console.info('RSVP stored in Firestore');
+          // clear form after successful remote save
+          try{ rsvpForm.reset(); }catch(e){}
+        }catch(err){
+          // richer logging for debugging
+          try{
+            console.groupCollapsed('Firestore write failed — detailed info');
+            console.error('Error object:', err);
+            if (err && err.code) console.error('SDK error code:', err.code);
+            if (err && err.message) console.error('Message:', err.message);
+            if (err && err.stack) console.error('Stack:', err.stack);
+            // try to inspect network response if available (some errors include a response property)
+            if (err && err.response) console.error('Response:', err.response);
+            console.groupEnd();
+          }catch(loggingErr){ console.warn('Additional error while logging Firestore error', loggingErr); }
+
+          // user-visible note (non-blocking)
+          showTemporaryNotice('Could not save RSVP to server — saved locally instead.');
+
+          console.warn('Falling back to localStorage for RSVP');
+          const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+          rsvps.push(payload);
+          localStorage.setItem('rsvps', JSON.stringify(rsvps));
+          // clear form after fallback save as well
+          try{ rsvpForm.reset(); }catch(e){}
+        }
+      }else{
+        const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+        rsvps.push(payload);
+        localStorage.setItem('rsvps', JSON.stringify(rsvps));
+        // clear form for local-only save
+        try{ rsvpForm.reset(); }catch(e){}
+      }
+
+      closeModal();
+      showThanks(name);
     });
   }
+
+    // small helper to show a temporary inline notice near top of page
+    function showTemporaryNotice(msg, duration = 6000){
+      try{
+        const n = document.createElement('div');
+        n.className = 'temporary-notice';
+        n.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);top:18px;background:#fff0f6;border:1px solid #ffd6e8;padding:8px 12px;border-radius:8px;color:#b21f66;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,0.06);font-weight:600';
+        n.textContent = msg;
+        document.body.appendChild(n);
+        setTimeout(()=>{ n.style.opacity = '0'; n.style.transition='opacity 400ms'; }, duration - 350);
+        setTimeout(()=>n.remove(), duration);
+      }catch(e){ /* ignore */ }
+    }
 
   function showThanks(name){
     const node = document.createElement('div');
     node.className = 'card';
     node.style.textAlign = 'center';
-    node.innerHTML = `<strong>Thanks, ${escapeHtml(name || 'friend')}!</strong><div style="font-size:.9rem;color:var(--muted);margin-top:6px">I'll be waiting 💕</div>`;
+    node.innerHTML = `<strong>Thanks, my ${escapeHtml(name || 'friend')}!</strong><div style="font-size:.9rem;color:var(--muted);margin-top:6px">I'll be waiting 💕</div>`;
     document.querySelector('.container').prepend(node);
     setTimeout(()=>{ node.style.opacity = '0'; node.style.transform='translateY(-6px)'; }, 3500);
     setTimeout(()=>node.remove(),4200);

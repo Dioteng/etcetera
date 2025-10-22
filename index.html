@@ -51,15 +51,23 @@
     <div id="rsvpModal" class="modal" aria-hidden="true">
         <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
-            <h3 id="modalTitle">Yay! Quick RSVP</h3>
+            <h3 id="modalTitle">Yay!</h3>
             <form id="rsvpForm">
                 <label>
                     Your name
-                    <input type="text" id="name" placeholder="Your name" required />
+                    <select id="name" required>
+                        <option value="" disabled selected>Select a name</option>
+                        <option value="ciat">ciat</option>
+                        <option value="love">love</option>
+                        <option value="bebe labs">bebe labs</option>
+                        <option value="darling">darling</option>
+                        <option value="sweetheart">sweetheart</option>
+                        <option value="love of my life">love of my life</option>
+                    </select>
                 </label>
                 <label>
                     A short message
-                    <textarea id="message" rows="3" placeholder="Something sweet... (optional)"></textarea>
+                    <textarea id="message" rows="3" placeholder="Something ciat would say to me... (optional)"></textarea>
                 </label>
                 <div class="modal-actions">
                     <button type="submit" class="btn btn-primary">Send</button>
@@ -70,6 +78,20 @@
     </div>
 
     <script src="js/script.js" defer></script>
+        <!-- Optional Firebase SDK: create assets/firebase-config.js from the example to enable Firestore RSVP storage -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script>
+            // load optional firebase config if present
+            (function(){
+                const s = document.createElement('script');
+                s.src = 'assets/firebase-config.js';
+                s.async = true;
+                s.onload = function(){ console.info('Firebase config loaded'); };
+                s.onerror = function(){ /* no config, continue silently */ };
+                document.head.appendChild(s);
+            })();
+        </script>
 </body>
 
 </html>

@@ -30,3 +30,25 @@ Accessibility & small features
 
 If you want additional pages (gallery, directions, printable card), tell me which pages you want and I'll add them.
 # etcetera
+
+## Firebase (optional)
+
+If you'd like RSVPs to be collected centrally, you can enable Firebase Firestore.
+
+1. Create a Firebase project at https://console.firebase.google.com
+2. Add a Web App and copy the config values from Project Settings → Your apps.
+3. Create a file `assets/firebase-config.js` with the following shape:
+
+```js
+window.FIREBASE_CONFIG = {
+	apiKey: "...",
+	authDomain: "...",
+	projectId: "...",
+	storageBucket: "...",
+	messagingSenderId: "...",
+	appId: "..."
+};
+```
+
+4. The site already includes the Firebase SDK and will initialize Firestore automatically when that file is present. RSVPs submitted from the modal will be written to the `rsvps` collection. If Firestore is not configured, RSVPs fall back to `localStorage`.
+

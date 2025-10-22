@@ -92,6 +92,32 @@ body{
 .modal-panel h3{margin:0 0 0.5rem}
 .modal-panel label{display:block;margin:0.5rem 0;color:#333}
 .modal-panel input,.modal-panel textarea{width:100%;padding:0.6rem;border-radius:8px;border:1px solid #eee;margin-top:0.25rem}
+
+/* Make select inputs look nicer and match the pink theme */
+.modal-panel select{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  padding:0.6rem 2.6rem 0.6rem 0.75rem; /* room for custom arrow */
+  border-radius:8px;
+  border:1px solid #f3dce9;
+  background: linear-gradient(180deg,#fff,#fff);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="%23e84a9a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat:no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  font-weight:600;
+  color:var(--pink-600);
+  margin-top:0.25rem;
+  transition:box-shadow .18s ease, transform .08s ease;
+}
+.modal-panel select:focus{
+  outline:none;
+  box-shadow:0 6px 18px rgba(232,74,154,0.12), 0 0 0 4px rgba(232,74,154,0.06);
+  border-color:var(--pink-400);
+  transform:translateY(-1px);
+}
+.modal-panel option[disabled]{ color:#999; }
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:0.75rem}
 
 /* small flourish */
