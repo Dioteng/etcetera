@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" aria-hidden="true">
+  <defs>
+    <radialGradient id="g1" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffe6f0" />
+      <stop offset="60%" stop-color="#ff7ab6" />
+      <stop offset="100%" stop-color="#e84a9a" />
+    </radialGradient>
+    <radialGradient id="g2" cx="50%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffd6e8" stop-opacity="0.2"/>
+    </radialGradient>
+  </defs>
+  <g transform="translate(120,120)">
+    <!-- petals (8) -->
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(0)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z" transform="rotate(0)"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(45)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(90)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(135)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(180)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(225)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(270)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+    <g fill="url(#g1)" stroke="#f4a0c8" stroke-width="1" transform="rotate(315)">
+      <path d="M0 -18 C 36 -36 48 -72 18 -110 C -12 -72 0 -36 0 -18 Z"/>
+    </g>
+
+    <!-- center -->
+    <circle r="28" fill="url(#g2)" stroke="#ffb6d6" stroke-width="2" />
+    <circle r="12" fill="#fff5fb" opacity="0.9" />
+  </g>
+</svg>

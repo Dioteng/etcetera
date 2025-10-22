@@ -16,16 +16,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.body.style.overflow = '';
   }
 
-  yesBtn.addEventListener('click', openModal);
-  modalClose.addEventListener('click', closeModal);
-  cancelBtn.addEventListener('click', closeModal);
+  // NOTE: modal event listeners are attached conditionally later (only on index.html)
 
   // playful avoidance: move 'no' button when cursor nears
-  noBtn.addEventListener('mouseenter', async ()=>{
+  if (noBtn){
+    noBtn.addEventListener('mouseenter', async ()=>{
     // multi-step dodge: attempt at least 3 safe moves around the viewport
     const avoidRects = [];
-    const yesRect = yesBtn.getBoundingClientRect();
-    avoidRects.push(yesRect);
+    if (yesBtn) {
+      const yesRect = yesBtn.getBoundingClientRect();
+      avoidRects.push(yesRect);
+    }
     const footer = document.querySelector('.footer');
     if (footer) avoidRects.push(footer.getBoundingClientRect());
     const modalRect = modal ? modal.getBoundingClientRect() : null;
@@ -104,10 +105,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     noBtn.style.transform = '';
   });
 
-  // Reset transforms on window resize so layout can recalc and avoid stuck positions
-  window.addEventListener('resize', ()=>{
-    noBtn.style.transform = '';
-  });
+    // Reset transforms on window resize so layout can recalc and avoid stuck positions
+    window.addEventListener('resize', ()=>{
+      noBtn.style.transform = '';
+    });
+  }
 
   // Gallery loader: find elements with data-gallery and render images from manifest
   async function tryFetchManifest(paths){
@@ -172,6 +174,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
+  // Modal event wiring: only attach when elements exist and only on index/root
+  const onIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+  if (onIndex){
+    if (yesBtn) yesBtn.addEventListener('click', openModal);
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+  }
+
   function openLightbox(src, alt){
     const lb = document.getElementById('lightbox');
     if(!lb) return;
@@ -191,7 +201,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   loadGalleries();
 
   // Submit RSVP (local-only): store to localStorage and show a tiny thank you
-  rsvpForm.addEventListener('submit', (e)=>{
+  if (rsvpForm){
+    rsvpForm.addEventListener('submit', (e)=>{
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
     const message = document.getElementById('message').value.trim();
@@ -200,7 +211,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     localStorage.setItem('rsvps', JSON.stringify(rsvps));
     closeModal();
     showThanks(name);
-  });
+    });
+  }
 
   function showThanks(name){
     const node = document.createElement('div');

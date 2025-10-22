@@ -1,66 +1,53 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>October 30 — Details & Photos</title>
+    <title>For Ciat</title>
+    <!-- flower favicon and touch icon -->
+    <link rel="icon" type="image/svg+xml" href="assets/flower.svg">
+    <link rel="apple-touch-icon" href="assets/flower.svg">
+    <meta name="theme-color" content="#ffe6f0">
     <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <main class="container">
-      <header class="hero">
-        <img src="assets/heart.svg" alt="heart" class="logo" />
-        <h1 class="title">The Next Day</h1>
-        <p class="subtitle">Cardio and homemade lunch</p>
-        <p style="margin-top:8px">
-          <a href="index.html" class="btn btn-ghost">Back</a>
-          <a href="date-31.html" class="btn btn-ghost" style="margin-left:8px">The Next Next Day</a>
-        </p>
-      </header>
+        <header class="hero">
+            <img src="assets/heart.svg" alt="heart" class="logo" />
+            <h1 class="title">The Next Day</h1>
+            <p class="subtitle">Cardio and homemade lunch</p>
+            <p style="margin-top:8px">
+                <a href="index.html" class="btn btn-ghost">Back</a>
+                <a href="date-31.html" class="btn btn-ghost" style="margin-left:8px">The Next Next Day</a>
+            </p>
+        </header>
 
-      <section class="details card">
-        <h2>Details</h2>
-        <ul>
-          <li><strong>When:</strong> October 30, 2025</li>
-          <li><strong>Where:</strong> Baywalk, CCP</li>
-          <li><strong>Time:</strong> 5:30PM — sunset stroll</li>
-        </ul>
-      </section>
+        <section class="details card">
+            <h2>Details</h2>
+            <ul>
+                <li><strong>When:</strong> October 30, 2025</li>
+                <li>Lunch Date @Home <span>(i'll cook something you will like😋)</span></li>
+                <li>Afternoon Cardio <span>(it's a leg day🦵🏼)</span></li>
+                <li>Movie Date Night <span>(let's watch the part3👻)</span></li>
+            </ul>
+        </section>
 
-      <section class="gallery card" aria-label="Photo gallery" data-gallery="30">
-        <h2>Photos</h2>
-        <div class="gallery-grid">
-          <div class="gallery-placeholder">Add your photos to <code>assets/photos/30/</code> and list filenames in <code>assets/photos/30/manifest.json</code>.</div>
-        </div>
-      </section>
+        <section class="gallery card" aria-label="Photo gallery" data-gallery="30">
+            <h2>Visuals</h2>
+            <div class="gallery-grid">
+                <div class="gallery-placeholder">Add your photos to <code>assets/photos/30/</code> and list filenames in
+                    <code>assets/photos/30/manifest.json</code>.</div>
+            </div>
+        </section>
 
-      <footer class="footer">Made with <span class="heart">❤</span></footer>
+        <footer class="footer">Made with <span class="heart">❤</span></footer>
     </main>
-
-    <!-- RSVP Modal (shared) -->
-    <div id="rsvpModal" class="modal" aria-hidden="true">
-      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
-        <h3 id="modalTitle">Quick RSVP</h3>
-        <form id="rsvpForm">
-          <label>
-            Your name
-            <input type="text" id="name" placeholder="Your name" required />
-          </label>
-          <label>
-            A short message
-            <textarea id="message" rows="3" placeholder="Something sweet... (optional)"></textarea>
-          </label>
-          <div class="modal-actions">
-            <button type="submit" class="btn btn-primary">Send</button>
-            <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <div id="lightbox" class="lightbox" aria-hidden="true"></div>
 
     <script src="js/script.js" defer></script>
-  </body>
+</body>
+
 </html>
